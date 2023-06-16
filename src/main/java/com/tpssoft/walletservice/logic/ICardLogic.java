@@ -1,5 +1,7 @@
 package com.tpssoft.walletservice.logic;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.tpssoft.walletservice.dto.CardDto;
@@ -11,6 +13,8 @@ public interface ICardLogic {
 
 	boolean addNewCard(NewCardDto newCard);
 
-	CardDto getCardInformation(String userId);
+	CardDto getCardInformation(String userId, String cardId);
+	
+	List<CardDto> getListCards(String userId);
 
 }

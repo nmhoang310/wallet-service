@@ -19,19 +19,21 @@ public class WalletLogicImpl implements IWalletLogic {
 	
 	@Override
 	public boolean createWallet(String userId) {
-		Wallet wallet = new Wallet();
-		wallet.setWalletId(NanoIdUtils.randomNanoId());
-		wallet.setUserId(userId);
-		wallet.setBalance(0.00);
-		wallet.setCreatedAt(LocalDate.now());
-		wallet.setUpdatedAt(LocalDateTime.now());
-		
-		try {
-			walletRepository.save(wallet);
-			return true;
-		} catch (IllegalArgumentException |  OptimisticLockingFailureException ex) {
-			System.out.println(ex);
+		if (walletRepository.getWalletByUserId(userId) == null) {
+			Wallet wallet = new Wallet();
+			wallet.setWalletId(NanoIdUtils.randomNanoId());
+			wallet.setUserId(userId);
+			wallet.setBalance(0.00);
+			wallet.setCreatedAt(LocalDate.now());
+			wallet.setUpdatedAt(LocalDateTime.now());
 			
+			try {
+				walletRepository.save(wallet);
+				return true;
+			} catch (IllegalArgumentException |  OptimisticLockingFailureException ex) {
+				System.out.println(ex);
+				
+			}
 		}
 		return false;
 	}
@@ -62,8 +64,12 @@ public class WalletLogicImpl implements IWalletLogic {
 	@Override
 	public String getWalletId(String userId) {
 		Wallet wallet = walletRepository.getWalletByUserId(userId);
-		String walletId = wallet.getWalletId();
-		return walletId;
+		if (wallet != null)
+		{
+			String walletId = wallet.getWalletId();
+			return walletId;
+		}			
+		return null;
 	}
 	
 }

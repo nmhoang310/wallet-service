@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +58,8 @@ public class CardLogicImpl implements ICardLogic {
 	}
 	
 	@Override
-	public CardDto getCardInformation(String userId) {
-		Card card = cardRepository.getCardByUserId(userId);
+	public CardDto getCardInformation(String userId, String cardId) {
+		Card card = cardRepository.getInforCard(userId, cardId);
 		CardDto dto = new CardDto();
 		dto.setCardId(card.getCardId());
 		dto.setCardNumber(card.getCardNumber());
@@ -66,8 +68,27 @@ public class CardLogicImpl implements ICardLogic {
 		dto.setCardType(card.getCardType());
 		dto.setBillingAddr(card.getBillingAddress());
 		dto.setFirstName(card.getFirstName());
-		dto.setLastName(card.getLastName());
+		dto.setLastName(card.getLastName());		
 		return dto;
 	}
 	
+	@Override
+	public List<CardDto> getListCards(String userId) {
+		List<CardDto> results = new ArrayList<>();
+		for (Card card : cardRepository.getCardByUserId(userId)) {
+			CardDto dto = new CardDto();
+			dto.setCardId(card.getCardId());
+			dto.setCardNumber(card.getCardNumber());
+			dto.setCvv(card.getCvv());
+			dto.setExpDate(card.getExpirationDate());
+			dto.setCardType(card.getCardType());
+			dto.setBillingAddr(card.getBillingAddress());
+			dto.setFirstName(card.getFirstName());
+			dto.setLastName(card.getLastName());
+			
+			results.add(dto);
+		}
+		
+		return results;
+	}
 }

@@ -1,5 +1,7 @@
 package com.tpssoft.walletservice.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,14 @@ public class CardServiceImpl implements ICardService {
 	}
 
 	@Override
-	public CardDto getCardInformation(String userId) {
-		return cardLogic.getCardInformation(userId);
+	public List<CardDto> getListCards(String userId) {
+		return cardLogic.getListCards(userId);
 	}
 	
-	
+	@Override
+	public CardDto getCardInformation(String userId, String cardId) {
+		return cardLogic.getCardInformation(userId, cardId);
+	}
 	
 	
 	

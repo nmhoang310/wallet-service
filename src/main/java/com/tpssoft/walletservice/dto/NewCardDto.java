@@ -8,10 +8,8 @@ import lombok.Data;
 
 @Data
 public class NewCardDto {
-	@NotEmpty(message = "Fist name is not empty")
 	private String firstName;
 	
-	@NotEmpty(message = "Fist name is not empty")
 	private String lastName;
 	
 	@NotEmpty(message = "Card number is not empty")

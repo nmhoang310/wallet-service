@@ -1,8 +1,13 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${JWK}
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: admin
-    url: jdbc:postgresql://localhost:5432/ewallet-system
+    password: ${PWD}
+    url: ${URL}
     username: postgres
   jpa:
     hibernate:
@@ -13,3 +18,4 @@ spring:
         default_schema: wallet
         format_sql: true
     show-sql: true
+
